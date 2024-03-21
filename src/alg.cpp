@@ -3,11 +3,31 @@
 #include <cstdint>
 
 int cbinsearch(int *arr, int size, int value) {
-    uint64_t ValueCounter = 0;
-    for (uint64_t i = 0; i < size; i++) {
-        if (arr[i] == value) {
-            ValueCounter++;
+    int count = 0;
+    int lower = 0;
+    int high = size - 1;
+    while (lower <= high) {
+        int mid = (lower + high) / 2;
+        if (arr[mid] < value) {
+            lower = mid + 1;
+        }
+        else if (arr[mid] > value) {
+            high = mid - 1;
+        }
+        else {
+            count++;
+            int per = mid-1;
+            mid++;
+            while (arr[mid] == value) {
+                count++;
+                mid++;
+            }
+            while (arr[per] == value) {
+                count++;
+                per--;
+            }
+            break;
         }
     }
-    return ValueCounter;
+    return count;
 }
